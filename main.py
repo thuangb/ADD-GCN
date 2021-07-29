@@ -1,5 +1,6 @@
 import os, sys, pdb
 import argparse
+from losses import *
 from models import get_model
 from data import make_data_loader
 import warnings
@@ -39,7 +40,7 @@ parser.add_argument('--resume', default='', type=str, metavar='PATH', help='path
 
 def main(args):
 
-    if args.seed is not None:
+    if args.seed > 0:#is not None:
         print ('* absolute seed: {}'.format(args.seed))
         random.seed(args.seed)
         torch.manual_seed(args.seed)
@@ -56,7 +57,8 @@ def main(args):
 
     model = get_model(num_classes, args)
 
-    criterion = torch.nn.MultiLabelSoftMarginLoss()
+    #criterion = torch.nn.MultiLabelSoftMarginLoss()
+    criterion = AsymmetricLossOptimized(gamma_neg=2, gamma_pos=1, clip=0, disable_torch_grad_focal_loss=True, reduction='mean')
 
     trainer = Trainer(model, criterion, train_loader, val_loader, args)
     

@@ -21,7 +21,7 @@ class Trainer(object):
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.args = args
-        # pprint (self.args)
+        # print (self.args)
         print('--------Args Items----------')
         for k, v in vars(self.args).items():
             print('{}: {}'.format(k, v))
@@ -189,10 +189,12 @@ class Trainer(object):
             inputs = data['image']
             targets = data['target']
 
-            # for voc
+            # transform all dataset to [0,1] because of voc dataset range is [-1,0]
             labels = targets.clone()
-            targets[targets==0] = 1
+            targets[targets==0] = 1            
             targets[targets==-1] = 0
+            
+                
 
             if torch.cuda.is_available():
                 inputs = inputs.cuda()
@@ -208,7 +210,7 @@ class Trainer(object):
             st_time = time.time()
 
             if is_train and i % self.args.display_interval == 0:
-                print ('{}, {} Epoch, {} Iter, Loss: {:.4f}, Data time: {:.4f}, Batch time: {:.4f}'.format(
+                sys.stdout.write('\r{}, {} Epoch, {} Iter, Loss: {:.4f}, Data time: {:.4f}, Batch time: {:.4f}'.format(
                         datetime.now().strftime('%Y-%m-%d %H:%M:%S'),  self.epoch+1, i, 
                         self.meters['loss'].value(), self.meters['data_time'].value(), 
                         self.meters['batch_time'].value()))

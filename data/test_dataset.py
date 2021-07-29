@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from coco import COCO2014
 from voc import VOC2007, VOC2012
+from rapv2 import RAPv2
 
 data = sys.argv[1]
 
@@ -35,17 +36,22 @@ transform = transforms.Compose([
 # val_dataset = VOC2007(data, phase='test', transform=transform)
 
 # VOC2012
-train_dataset = VOC2012(data, phase='trainval', transform=transform)
-val_dataset = VOC2012(data, phase='test', transform=transform)
+#train_dataset = VOC2012(data, phase='trainval', transform=transform)
+#val_dataset = VOC2012(data, phase='test', transform=transform)
 
-train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True, num_workers=4, 
-                            pin_memory=True, collate_fn=collate_fn, drop_last=True)
-val_loader = DataLoader(val_dataset, batch_size=4, shuffle=False, num_workers=4, 
+# RAPv2
+train_dataset = RAPv2(data, phase='trainval', transform=transform)
+val_dataset = RAPv2(data, phase='test', transform=transform)
+
+if __name__ == '__main__':
+    train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True, num_workers=4, 
+                              pin_memory=True, collate_fn=collate_fn, drop_last=True)
+    val_loader = DataLoader(val_dataset, batch_size=4, shuffle=False, num_workers=4, 
                             pin_memory=True, collate_fn=collate_fn)
 
-for data in train_loader:
+    print(next(iter(train_loader)))
+
+    for data in train_loader:
+        pdb.set_trace()
+     
     pdb.set_trace()
-
-
-
-pdb.set_trace()

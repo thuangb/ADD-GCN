@@ -8,10 +8,12 @@ import torchvision.transforms as transforms
 
 from .coco import COCO2014
 from .voc import VOC2007, VOC2012
+from .rapv2 import RAPv2
 
 data_dict = {'COCO2014': COCO2014,
-            'VOC2007': VOC2007,
-            'VOC2012': VOC2012}
+             'VOC2007': VOC2007,
+             'VOC2012': VOC2012,
+             'RAPv2': RAPv2}
 
 def collate_fn(batch):
     ret_batch = dict()
@@ -124,6 +126,8 @@ def make_data_loader(args, is_train=True):
         val_dataset = COCO2014(root_dir, phase='val', transform=transform)
     elif args.data in ('VOC2007', 'VOC2012'):
         val_dataset = data_dict[args.data](root_dir, phase='test', transform=transform)
+    elif args.data == 'RAPv2':
+        val_dataset = data_dict[args.data](root_dir, phase='test', transform=transform)
     else:
         raise NotImplementedError('Value error: No matched dataset!')
     
@@ -141,12 +145,13 @@ def make_data_loader(args, is_train=True):
         train_dataset = COCO2014(root_dir, phase='train', transform=transform)
     elif args.data in ('VOC2007', 'VOC2012'):
         train_dataset = data_dict[args.data](root_dir, phase='trainval', transform=transform)
+    elif args.data == 'RAPv2':
+        train_dataset = data_dict[args.data](root_dir, phase='trainval', transform=transform)
     else:
         raise NotImplementedError('Value error: No matched dataset!')
     
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, 
                             num_workers=args.num_workers, pin_memory=True, 
                             collate_fn=collate_fn, drop_last=True)
-    
 
     return train_loader, val_loader, num_classes
