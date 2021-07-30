@@ -1,6 +1,6 @@
 # ADD-GCN: Attention-Driven Dynamic Graph Convolutional Network for Multi-Label Image Recognition
 
-This project hosts the code for implementing the ADD-GCN algorithm for multi-label image recognition, as presented in our paper:
+This project hosts the code for implementing the ADD-GCN algorithm for multi-label image recognition, as presented in the paper:
 
     Attention-Driven Dynamic Graph Convolutional Network for Multi-Label Image Recognition;
     Jin Ye, Junjun He, Xiaojiang Peng, Wenhao Wu, Yu Qiao;
@@ -12,8 +12,12 @@ The full paper is available at: [https://arxiv.org/abs/2012.02994](https://arxiv
 ## Installation
 #### This project is implemented with Pytorch and has been tested on version Pytorch 1.0/1.1/1.2.
 
-## A quick demo
+## How to use
 After you have installed Pytorch, you can follow the below steps to run a quick demo.
+
+### Training for COCO2014
+
+    python main.py --data COCO2014 --data_root_dir {YOUR-ROOT-DATA-DIR} --model_name ADD_GCN --save_dir {YOUR-SAVE-MODEL-DIR} -i 448
 
 ### Inference for COCO2014
 
@@ -39,7 +43,7 @@ ADD-GCN | 576×576 | 85.2
 
 
 ## Citations
-Please consider citing our paper in your publications if the project helps your research. BibTeX reference is as follows.
+Please consider citing the paper in your publications if the project helps your research. BibTeX reference is as follows.
 ```
 @inproceedings{ye2020add,
   title   =  {Attention-Driven Dynamic Graph Convolutional Network for Multi-Label Image Recognition},
