@@ -31,6 +31,7 @@ parser.add_argument('--seed', default=1, type=int, help='seed for initializing t
 ''' Train setting '''
 parser.add_argument('--data', metavar='NAME', help='dataset name (e.g. COCO2014')
 parser.add_argument('--model_name', type=str, default='ADD_GCN')
+parser.add_argument('--pretrain_name', type=str, default='resnet101')
 parser.add_argument('--save_dir', default='./checkpoint/COCO2014/', type=str, help='save path')
 
 ''' Val or Tese setting '''
