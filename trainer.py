@@ -210,7 +210,7 @@ class Trainer(object):
             st_time = time.time()
 
             if is_train and i % self.args.display_interval == 0:
-                sys.stdout.write('\r{}, {} Epoch, {} Iter, Loss: {:.4f}, Data time: {:.4f}, Batch time: {:.4f}'.format(
+                print('{}, {} Epoch, {} Iter, Loss: {:.4f}, Data time: {:.4f}, Batch time: {:.4f}'.format(
                         datetime.now().strftime('%Y-%m-%d %H:%M:%S'),  self.epoch+1, i, 
                         self.meters['loss'].value(), self.meters['data_time'].value(), 
                         self.meters['batch_time'].value()))
